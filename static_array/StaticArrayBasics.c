@@ -254,7 +254,7 @@ static_array sorted_squares(int arr[], int size) {
 
 int main() {
   // -------------------------------
-  // functino min_max()
+  // function min_max()
   // -------------------------------
   {
     // Example #1:

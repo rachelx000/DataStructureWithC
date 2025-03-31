@@ -1,7 +1,6 @@
 #include <stdlib.h>
-#include <assert.h>
-#include "DynamicArray.h"
 #include <stdio.h>
+#include "DynamicArray.h"
 
 /*
  * This is the definition of the dynamic array structure you'll use for your

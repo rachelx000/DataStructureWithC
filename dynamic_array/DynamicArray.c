@@ -3,23 +3,6 @@
 #include "DynamicArray.h"
 
 /*
- * This is the definition of the dynamic array structure you'll use for your
- * implementation.  Importantly, your dynamic array implementation will store
- * each data element as a void* value.  This will permit data of any type to
- * be stored in your array.  Because each individual element will be stored in
- * your array as type void*, the data array needs to be an array of void*.
- * Hence it is of type void**.
- *
- * You should not modify this structure.
- */
-struct dynarray
-{
-    void** data;
-    int size;
-    int capacity;
-};
-
-/*
  * This function should allocate and initialize a new, empty dynamic array and
  * return a pointer to it.  The array you allocate should have an initial
  * capacity of 2.
@@ -36,6 +19,7 @@ struct dynarray* dynarray_create() {
     free(dynarr_ptr);
     exit(1);
   }
+  dynarr_ptr->start = 0;
   dynarr_ptr->size = 0;
   dynarr_ptr->capacity = 2;
   return dynarr_ptr;
@@ -65,6 +49,13 @@ void dynarray_free(struct dynarray* da) {
  */
 int dynarray_size(struct dynarray* da) {
   return da->size;
+}
+
+/*
+ * This function should return the start index of a given dynamic array
+ */
+int dynarray_start(struct dynarray* da) {
+  return da->start;
 }
 
 /*
@@ -100,6 +91,54 @@ void dynarray_insert(struct dynarray* da, void* val) {
   da->data[da->size] = val;
   da->size += 1;
 }
+
+/*
+* This function should insert a new value to a given dynamic array at a given
+* index. If there is not enough space in the dynamic array to store the element
+* being inserted, this function should double the size of the array.
+*
+* Params:
+*   da - the dynamic array into which to insert an element.  May not be NULL.
+*   val - the value to be inserted.  Note that this parameter has type void*,
+*     which means that a pointer of any type can be passed.
+*   idx - the index of the element to be inserted.  The value of `idx` must be
+*     between 0 (inclusive) and n (inclusive), where n is the number of
+*     elements stored in the array.
+*/
+void dynarray_insert_at_index(struct dynarray* da, int idx, void* val) {
+  // Check if there is enough space for the inserted element
+  if ( da->size == da->capacity ) {
+    void** new_arr = malloc(da->capacity*2*sizeof(void*));
+    if (!new_arr) {
+      printf("Memory allocation for new array failed!");
+      exit(1);
+    }
+
+    // Dynamic resize considering the start of the array
+    int j = da->start;
+    for (int i = 0; i < da->size; i++) {
+      new_arr[i] = da->data[j];
+      j = (j+1) % da->capacity;
+    }
+
+    free(da->data);
+    da->data = new_arr;
+    da->start=0;
+    idx = da -> size;
+    da->capacity *= 2;
+  }
+
+  // Insert the new element at the target index
+  if (0 <= idx < da->capacity) {
+    da->data[idx] = val;
+    da->size += 1;
+  }
+  else {
+    printf("invalid index!");
+    exit(1);
+  }
+}
+
 
 /*
  * This function should remove an element at a specified index from a dynamic
@@ -167,7 +206,29 @@ void dynarray_set(struct dynarray* da, int idx, void* val) {
     da->data[idx] = val;
   }
   else {
+    printf("Invalid index!");
+    exit(1);
+  }
+}
+
+void* dynarray_remove_start(struct dynarray* da) {
+  void* start = da->data[da->start];
+  if (start) {
+    da->data[da->start] = NULL;
+    da->size -= 1;
+    da->start = (da->start + 1) % da->capacity;
+  }
+  else {
+    printf("Error: Attempt to remove non-existed start");
+    exit(1);
+  }
+  return start;
+}
+
+void* dynarray_get_for_queue(struct dynarray* da, int idx) {
+  if ( idx < 0 || idx >= da->capacity ) {
     printf("invalid index!");
     exit(1);
   }
+  return da->data[idx];
 }

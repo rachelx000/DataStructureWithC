@@ -3,29 +3,15 @@
 #include "LinkedList.h"
 
 /*
- * This structure is used to represent a single link in a singly-linked list.
- * It is not defined in ll.h, so it is not visible to the user.  You should not
- * modify this structure.
- */
-struct link {
-  void* val;
-  struct link* next;
-};
-
-/*
- * This structure is used to represent an entire singly-linked list.  Note that
- * we're keeping track of just the head of the list here, for simplicity.
- */
-struct list {
-  struct link* head;
-};
-
-/*
  * This function should allocate and initialize a new, empty linked list and
  * return a pointer to it.
  */
 struct list* list_create() {
   struct list* new_list = malloc(sizeof(struct list));
+  if (!new_list) {
+    printf("Memory allocation failed for a new linked list!\n");
+    exit(1);
+  }
   new_list->head = NULL;
   return new_list;
 }
@@ -68,6 +54,11 @@ void list_free(struct list* list) {
 void list_insert(struct list* list, void* val) {
   // Create a new link and store the value
   struct link* new_link = malloc(sizeof(struct link));
+  if (!new_link) {
+    printf("Memory allocation failed for a new link!\n");
+    list_free(list);
+    exit(1);
+  }
   new_link->val = val;
   // Add the new link to the head of list
   new_link->next = list->head;
@@ -126,7 +117,26 @@ void list_remove(struct list* list, void* val, int (*cmp)(void* a, void* b)) {
     prev_link = curr_link;
     curr_link = curr_link->next;
   }
-  printf("Alert: No Target Element Stored in the list!");
+  printf("Alert: No Target Element Stored in the list!\n");
+}
+
+/* This function should remove the head of a given linked list and free the
+ * memory held by the head link being removed
+*
+ * Params:
+ *   list - the linked list from which to remove an element.  May not be NULL.
+ * */
+
+void list_remove_head(struct list* list) {
+  if (list->head) {
+    struct link* curr_head = list->head;
+    struct link* new_head = curr_head->next;
+    list->head = new_head;
+    free(curr_head);
+  }
+  else {
+    printf("The linked list has an empty head.\n");
+  }
 }
 
 /*

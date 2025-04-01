@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "BinarySearchTree.h"
+#include "../queue/Queue.h"
 
 /*
  * This structure represents a single node in a BST.  In addition to containing
@@ -236,4 +237,106 @@ void* bst_get(struct bst* bst, int key){
         else { curr_node = curr_node->right; }
     }
     return NULL;
+}
+
+/*
+ * Helper function for bst_DFS that uses pre-order traversal to process
+ * every node of a BST from the root
+ * */
+void __pre_traversal(struct bst_node* node) {
+    if (node) {
+        printf("%d ", node->key);
+        __pre_traversal(node->left);
+        __pre_traversal(node->right);
+    }
+}
+
+/*
+ * Helper function for bst_DFS that uses in-order traversal to process
+ * every node of a BST from the root
+ * */
+void __in_traversal(struct bst_node* node) {
+    if (node) {
+        __in_traversal(node->left);
+        printf("%d ", node->key);
+        __in_traversal(node->right);
+    }
+}
+
+/*
+ * Helper function for bst_DFS that uses post-order traversal to process
+ * every node of a BST from the root
+ * */
+void __post_traversal(struct bst_node* node) {
+    if (node) {
+        __post_traversal(node->left);
+        __post_traversal(node->right);
+        printf("%d ", node->key);
+    }
+}
+
+/*
+ * This function should perform DFS traversal on the given BST.
+ *
+ * Params:
+ *   bst - the BST whose elements are to be traversed.  May not be NULL.
+ *   order - the speciifc type of depth-first BST traversal
+ */
+void bst_DFS(struct bst* bst, enum DFS_order order) {
+    if ( bst ) {
+        switch (order) {
+            case PRE:
+                printf("Pre-order DFS Traversal:  ");
+                __pre_traversal(bst->root);
+                break;
+            case IN:
+                printf("In-order DFS Traversal:   ");
+                __in_traversal(bst->root);
+                break;
+            case POST:
+                printf("Post-order DFS Traversal: ");
+                __post_traversal(bst->root);
+                break;
+        }
+        printf("\n");
+    } else {
+        printf("Error: Invalid BST for DFS traversal!\n");
+        exit(1);
+    }
+}
+
+/*
+ * Helper function for bst_BFS that uses queue to process every
+ * node of a BST from the root
+ * */
+void __bfs_traversal(struct bst_node* root) {
+    struct queue* queue = queue_create();
+    queue_enqueue(queue, root);
+    struct bst_node* curr_node;
+    while (!queue_isempty(queue)) {
+        curr_node = queue_dequeue(queue);
+        printf("%d ", curr_node->key);
+        if (curr_node) {
+            if (curr_node->left) { queue_enqueue(queue, curr_node->left); }
+            if (curr_node->right) { queue_enqueue(queue, curr_node->right); }
+        }
+    }
+    queue_free(queue);
+}
+
+/*
+ * This function should perform BFS traversal on the given BST.
+ *
+ * Params:
+ *   bst - the BST whose elements are to be traversed.  May not be NULL.
+ */
+void bst_BFS(struct bst* bst) {
+    if ( bst ) {
+        printf("BFS Traversal:\t\t  ");
+        __bfs_traversal(bst->root);
+        printf("\n");
+    } else {
+        printf("Error: Invalid BST for DFS traversal!\n");
+        exit(1);
+    }
 }

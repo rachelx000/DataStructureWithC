@@ -1,6 +1,12 @@
 #ifndef __BST_H
 #define __BST_H
 
+enum DFS_order {
+    PRE,
+    IN,
+    POST
+};
+
 struct bst;
 
 struct bst* bst_create();
@@ -9,5 +15,7 @@ int bst_size(struct bst* bst);
 void bst_insert(struct bst* bst, int key, void* value);
 void bst_remove(struct bst* bst, int key);
 void* bst_get(struct bst* bst, int key);
+void bst_DFS(struct bst* bst, enum DFS_order order);
+void bst_BFS(struct bst* bst);
 
 #endif

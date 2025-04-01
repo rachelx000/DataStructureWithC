@@ -4,18 +4,6 @@
 #include "../dynamic_array/DynamicArray.h"
 
 /*
- * This is the structure that will be used to represent a queue.  This
- * structure specifically contains a single field representing a dynamic array
- * that should be used as the underlying data storage for the queue.
- *
- * You should not modify this structure.
- */
-struct queue
-{
-    struct dynarray* array;
-};
-
-/*
  * This function should allocate and initialize a new, empty queue and return
  * a pointer to it.
  */

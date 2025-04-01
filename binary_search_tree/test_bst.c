@@ -65,6 +65,24 @@ int main(int argc, char** argv) {
     bst_size(bst), NUM_TEST_DATA);
 
   /*
+   * Test the bst_DFS() correctly perform the traversal of the tree
+   */
+  printf("\n== Checking correct DFS traversal output from bst_DFS()\n");
+  bst_DFS(bst, PRE);
+  printf("(Expected DFS Traversal:  64 32 16 8 24 48 56 96 80 88 112 104 120 ) \n");
+  bst_DFS(bst, IN);
+  printf("(Expected DFS Traversal:  8 16 24 32 48 56 64 80 88 96 104 112 120 ) \n");
+  bst_DFS(bst, POST);
+  printf("(Expected DFS Traversal:  8 24 16 56 48 32 88 80 104 120 112 96 64 ) \n");
+
+  /*
+   * Test the bst_BFS() correctly perform the traversal of the tree
+   */
+  printf("\n== Checking correct BFS traversal output from bst_DFS()\n");
+  bst_BFS(bst);
+  printf("(Expected BFS Traversal:  64 32 96 16 48 80 112 8 24 56 88 104 120 ) \n");
+
+  /*
    * Test that we can successfully lookup all of the values we know are in the
    * BST.
    */

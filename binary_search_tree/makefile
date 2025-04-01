@@ -1,5 +1,5 @@
-bst: BinarySearchTree.c test_bst.c
-	gcc -o bst BinarySearchTree.c test_bst.c
+bst: BinarySearchTree.c test_bst.c ../queue/Queue.c ../dynamic_array/DynamicArray.c
+	gcc -o bst BinarySearchTree.c test_bst.c ../queue/Queue.c ../dynamic_array/DynamicArray.c
 
 run: bst
 	./bst

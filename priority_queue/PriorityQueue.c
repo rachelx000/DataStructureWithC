@@ -1,37 +1,14 @@
 #include <stdlib.h>
 #include <stdio.h>
-
 #include "PriorityQueue.h"
-#include "../dynamic_array/DynamicArray.h"
-
-/*
- * Visualization tool for debugging min-heap: https://www.cs.usfca.edu/~galles/visualization/Heap.html
- */
-
-/*
- * This is the structure that represents a priority queue.  You must define
- * this struct to contain the data needed to implement a priority queue.
- */
-
-struct elements
-{
-    int priority;
-    void* value;
-};
-
-struct pq
-{
-    struct dynarray* array;
-};
 
 /*
  * Helper function for debugging to print all the priority values from the start
  * to the end in the dynamic array for the priority queue
  */
 void pq_print_priority(struct pq* pq) {
-    printf("Current priority queue: ");
     if (pq_isempty(pq)) {
-        printf(" (Empty Queue) \n");
+        printf("(Empty Queue) \n");
         return;
     }
     for (int i = 0; i < dynarray_size(pq->array); i++) {
@@ -91,7 +68,6 @@ int pq_isempty(struct pq* pq) {
 
 /*
  * Helper function to swap two elements in the dynamic priority queue at the given indices
- *
  */
 void __swap(struct dynarray* arr, int ind1, int ind2)   {
     struct elements* element1 = dynarray_get(arr, ind1);
@@ -200,16 +176,16 @@ int pq_first_priority(struct pq* pq) {
 }
 
 /*
- * Helper function for pq_remove_first that percolate the new root down
- * in the priority queue to maintain the min-heap property
+ * Helper function for percolating down the element at a given index in the dynamic
+ * array for the priority queue to maintain the min-heap property
  */
-void __percolate_down(struct dynarray* arr) {
-    struct elements* root = dynarray_get(arr, 0);
+void __percolate_down(struct dynarray* arr, int ind) {
+    struct elements* target = dynarray_get(arr, ind);
     struct elements* left_child;
     struct elements* right_child;
-    int root_index = 0;
-    int left_child_index = 2*root_index+1;
-    int right_child_index = 2*root_index+2;
+    int curr_index = ind;
+    int left_child_index = 2*curr_index+1;
+    int right_child_index = 2*curr_index+2;
     int size = dynarray_size(arr);
     while (left_child_index < size) {
         // swap the two elements until to maintain the min-heap priorty until reaching
@@ -218,23 +194,23 @@ void __percolate_down(struct dynarray* arr) {
         right_child = (right_child_index < size) ? dynarray_get(arr, right_child_index) : NULL;
         if (!right_child) {
             // if there is only one child
-            if (root->priority >= left_child->priority) {
-                __swap(arr, root_index, left_child_index);
-                root_index = left_child_index;
+            if (target->priority >= left_child->priority) {
+                __swap(arr, curr_index, left_child_index);
+                curr_index = left_child_index;
             } else { break; }
         } else {
             // if there are two children
-            if (left_child->priority < right_child->priority && root->priority > left_child->priority) {
-                __swap(arr, root_index, left_child_index);
-                root_index = left_child_index;
+            if (left_child->priority < right_child->priority && target->priority > left_child->priority) {
+                __swap(arr, curr_index, left_child_index);
+                curr_index = left_child_index;
             }
-            else if (left_child->priority >= right_child->priority && root->priority > right_child->priority) {
-                __swap(arr, root_index, right_child_index);
-                root_index = right_child_index;
+            else if (left_child->priority >= right_child->priority && target->priority > right_child->priority) {
+                __swap(arr, curr_index, right_child_index);
+                curr_index = right_child_index;
             } else { break; }
         }
-        left_child_index = 2*root_index+1;
-        right_child_index = 2*root_index+2;
+        left_child_index = 2*curr_index+1;
+        right_child_index = 2*curr_index+2;
     }
 }
 
@@ -277,10 +253,110 @@ void* pq_remove_first(struct pq* pq) {
 
     // if there are more than one elements left in the array, percolate
     // down the new root to maintain the min-heap property
-    if (dynarray_size(pq->array) > 1) { __percolate_down(pq->array); }
+    if (dynarray_size(pq->array) > 1) { __percolate_down(pq->array, 0); }
 
     // printf("[After percolating down the new root)]\n");
     // pq_print_priority(pq);
 
     return removed_val;
+}
+
+/*
+ * This function should create a priority queue from a given dynamic array in O(n)
+ *
+ * Params:
+ *   arr - the dynamic array of elements that is used to build the priority queue.
+ *     May not be NULL or empty.
+ *   pq - the pointer to the target priority queue
+ *
+ * Return:
+ *   Should return a pointer to the created priority queue
+ */
+struct pq* build_pq_from_dynarray(struct dynarray* arr) {
+    if (arr) {
+        struct pq* new_pq = malloc(sizeof(struct pq));
+        new_pq->array = arr;
+        if (dynarray_size(arr)>3) {
+            // perform percolation down starting from the first non-leaf element
+            int non_leaf_index = dynarray_size(new_pq->array)/2 - 1;
+            for (int i = non_leaf_index ; i >= 0; i--) {
+                  __percolate_down(arr, i);
+            }
+        }
+        return new_pq;
+    } else {
+        printf("Error: Invalid array that is used to build the priority queue!\n");
+        exit(1);
+    }
+}
+
+/*
+ * Helper function for percolating down the element at a given index before the k index
+ * in the dynamic array for the priority queue to maintain the min-heap property
+ */
+void __percolate_down_with_k(struct dynarray* arr, int ind, int k) {
+    struct elements* target = dynarray_get(arr, ind);
+    struct elements* left_child;
+    struct elements* right_child;
+    int curr_index = ind;
+    int left_child_index = 2*curr_index+1;
+    int right_child_index = 2*curr_index+2;
+    while (left_child_index <= k) {
+        // swap the two elements until to maintain the min-heap priorty until reaching
+        // the beginning of the array
+        left_child = dynarray_get(arr, left_child_index);
+        right_child = (right_child_index <= k) ? dynarray_get(arr, right_child_index) : NULL;
+        if (!right_child) {
+            // if there is only one child
+            if (target->priority >= left_child->priority) {
+                __swap(arr, curr_index, left_child_index);
+                curr_index = left_child_index;
+            } else { break; }
+        } else {
+            // if there are two children
+            if (left_child->priority < right_child->priority && target->priority > left_child->priority) {
+                __swap(arr, curr_index, left_child_index);
+                curr_index = left_child_index;
+            }
+            else if (left_child->priority >= right_child->priority && target->priority > right_child->priority) {
+                __swap(arr, curr_index, right_child_index);
+                curr_index = right_child_index;
+            } else { break; }
+        }
+        left_child_index = 2*curr_index+1;
+        right_child_index = 2*curr_index+2;
+    }
+}
+
+/*
+ * This function should perform sorting on a given dynamic array to an descending order
+ * using the priority queue with a min-heap in O(nlogn)
+ *
+ * Params:
+ *   arr - the pointer to dynamic array of elements to be sorted. May not be NULL or empty.
+ *
+ * Return: the pointer to the sorted array of elements. May not be NULL or empty.
+ */
+void pq_heapsort(struct dynarray* arr) {
+    if (arr) {
+        struct pq* pq;
+        // build a min-heap from the array
+        pq = build_pq_from_dynarray(arr);
+
+        int k = dynarray_size(pq->array)-1;
+        // printf("Heap Before Sorting:\t");
+        // pq_print_priority(pq);
+        while (k > 0) {
+            // swap the min-priority element with the last element
+            __swap(pq->array, 0, k);
+            // shrink the heap portion using the indicator k
+            k -= 1;
+            // percolate down the new root in the heap portion
+            __percolate_down_with_k(pq->array, 0, k);
+        }
+        free(pq);
+    } else {
+        printf("Error: Invalid array that is used to build the priority queue!\n");
+        exit(1);
+    }
 }

@@ -129,7 +129,7 @@ void dynarray_insert_at_index(struct dynarray* da, int idx, void* val) {
   }
 
   // Insert the new element at the target index
-  if (0 <= idx < da->capacity) {
+  if (0 <= idx && idx < da->capacity) {
     da->data[idx] = val;
     da->size += 1;
   }
@@ -157,7 +157,7 @@ void dynarray_insert_at_index(struct dynarray* da, int idx, void* val) {
  */
 void dynarray_remove(struct dynarray* da, int idx) {
   // Perform removal of element only when idx is valid
-  if ( 0 <= idx < da->size ) {
+  if ( 0 <= idx && idx < da->size ) {
     da->data[idx] = NULL;
     for (int i = idx; i < da->size; i++) {
       da->data[i] = da->data[i+1];
@@ -166,7 +166,7 @@ void dynarray_remove(struct dynarray* da, int idx) {
     da->size-=1;
   }
   else {
-    printf("invalid index!");
+    printf("invalid index: curr_index %d fall out of the range [0, %d)!\n", idx, da->size);
     exit(1);
   }
 }
@@ -183,7 +183,7 @@ void dynarray_remove(struct dynarray* da, int idx) {
  */
 void* dynarray_get(struct dynarray* da, int idx) {
   if ( idx < 0 || idx >= da->size ) {
-    printf("invalid index!");
+    printf("invalid index: curr_index %d fall out of the range (0, %d)!\n", idx, da->size);
     exit(1);
   }
   return da->data[idx];
@@ -202,7 +202,7 @@ void* dynarray_get(struct dynarray* da, int idx) {
  *     which means that a pointer of any type can be passed.
  */
 void dynarray_set(struct dynarray* da, int idx, void* val) {
-  if ( 0 <= idx < da->size ) {
+  if ( 0 <= idx && idx < da->size ) {
     da->data[idx] = val;
   }
   else {

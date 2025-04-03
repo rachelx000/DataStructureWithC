@@ -1,0 +1,391 @@
+============ Testing avl_insert ============
+------------    Base cases      ------------
+
+== Test Case #1: RR (Expect: 2 1 3)
+Array Size: 3, Input Array:             1 2 3
+DFS Size: 3, Pre-order DFS Traversal:   2 1 3
+== Looking up values we know should NOT be in the AVL tree...
+
+== Test Case #2: LL (Expect: 2 1 3)
+Array Size: 3, Input Array:             3 2 1
+DFS Size: 3, Pre-order DFS Traversal:   2 1 3
+== Looking up values we know should NOT be in the AVL tree...
+
+== Test Case #3: RL (Expect: 2 1 3)
+Array Size: 3, Input Array:             1 3 2
+DFS Size: 3, Pre-order DFS Traversal:   2 1 3
+== Looking up values we know should NOT be in the AVL tree...
+
+== Test Case #4: LR (Expect: 2 1 3)
+Array Size: 3, Input Array:             3 1 2
+DFS Size: 3, Pre-order DFS Traversal:   2 1 3
+== Looking up values we know should NOT be in the AVL tree...
+
+------------    More cases      ------------
+
+== Test Case #5
+Array Size: 5, Input Array:             10 20 30 40 50
+DFS Size: 5, Pre-order DFS Traversal:   20 10 40 30 50
+== Looking up values we know should NOT be in the AVL tree...
+Expected Pre-order DFS Traversal:       20 10 40 30 50
+
+== Test Case 6
+Array Size: 5, Input Array:             10 20 30 50 40
+DFS Size: 5, Pre-order DFS Traversal:   20 10 40 30 50
+== Looking up values we know should NOT be in the AVL tree...
+Expected Pre-order DFS Traversal:       20 10 40 30 50
+
+== Test Case 7
+Array Size: 5, Input Array:             30 20 10 5 1
+DFS Size: 5, Pre-order DFS Traversal:   20 5 1 10 30
+== Looking up values we know should NOT be in the AVL tree...
+Expected Pre-order DFS Traversal:       20 5 1 10 30
+
+== Test Case 8
+Array Size: 5, Input Array:             30 20 10 1 5
+DFS Size: 5, Pre-order DFS Traversal:   20 5 1 10 30
+== Looking up values we know should NOT be in the AVL tree...
+Expected Pre-order DFS Traversal:       20 5 1 10 30
+
+== Test Case 9
+Array Size: 7, Input Array:             5 4 6 3 7 2 8
+DFS Size: 7, Pre-order DFS Traversal:   5 3 2 4 7 6 8
+== Looking up values we know should NOT be in the AVL tree...
+Expected Pre-order DFS Traversal:       5 3 2 4 7 6 8
+
+== Test Case 10
+Array Size: 10, Input Array:            0 3 6 9 12 15 18 21 24 27
+DFS Size: 10, Pre-order DFS Traversal:  9 3 0 6 21 15 12 18 24 27
+== Looking up values we know should NOT be in the AVL tree...
+Expected Pre-order DFS Traversal:       9 3 0 6 21 15 12 18 24 27
+
+== Test Case 11
+Array Size: 11, Input Array:            0 3 6 9 12 15 18 21 24 27 30
+DFS Size: 11, Pre-order DFS Traversal:  9 3 0 6 21 15 12 18 27 24 30
+== Looking up values we know should NOT be in the AVL tree...
+Expected Pre-order DFS Traversal:       9 3 0 6 21 15 12 18 27 24 30
+
+== Test Case 12
+Array Size: 12, Input Array:            0 3 6 9 12 15 18 21 24 27 30 33
+DFS Size: 12, Pre-order DFS Traversal:  21 9 3 0 6 15 12 18 27 24 30 33
+== Looking up values we know should NOT be in the AVL tree...
+Expected Pre-order DFS Traversal:       21 9 3 0 6 15 12 18 27 24 30 33
+
+== Test Case 13
+Array Size: 10, Input Array:            10 8 6 4 2 0 -2 -4 -6 -8
+DFS Size: 10, Pre-order DFS Traversal:  4 -4 -6 -8 0 -2 2 8 6 10
+== Looking up values we know should NOT be in the AVL tree...
+Expected Pre-order DFS Traversal:       4 -4 -6 -8 0 -2 2 8 6 10
+Array Size: 12, Input Array:            3 2 1 1 2 0 3 0 1 0 3 3
+DFS Size: 12, Pre-order DFS Traversal:  2 1 0 0 0 1 1 3 2 3 3 3
+== Looking up values we know should NOT be in the AVL tree...
+Expected Pre-order DFS Traversal:       2 1 0 0 0 1 1 3 2 3 3 3
+
+============ Testing avl_remove ============
+------------    Base cases      ------------
+
+== Test Case #1: RR
+Array Size: 8, Input Array:             50 40 60 30 70 20 80 45
+[Size: 8], Pre-order DFS Traversal:     50 30 20 40 45 70 60 80
+Removing... 20
+[Size: 7], Pre-order DFS Traversal:     50 40 30 45 70 60 80
+Expected Pre-order DFS Traversal:       50 40 30 45 70 60 80
+
+== Test Case #2: LL
+Array Size: 8, Input Array:             50 40 60 30 70 20 80 15
+[Size: 8], Pre-order DFS Traversal:     50 30 20 15 40 70 60 80
+Removing... 40
+[Size: 7], Pre-order DFS Traversal:     50 20 15 30 70 60 80
+Expected Pre-order DFS Traversal:       50 20 15 30 70 60 80
+
+== Test Case #3: RL
+Array Size: 8, Input Array:             50 40 60 30 70 20 80 35
+[Size: 8], Pre-order DFS Traversal:     50 30 20 40 35 70 60 80
+Removing... 20
+[Size: 7], Pre-order DFS Traversal:     50 35 30 40 70 60 80
+Expected Pre-order DFS Traversal:       50 35 30 40 70 60 80
+
+== Test Case #4: LR
+Array Size: 8, Input Array:             50 40 60 30 70 20 80 25
+[Size: 8], Pre-order DFS Traversal:     50 30 20 25 40 70 60 80
+Removing... 40
+[Size: 7], Pre-order DFS Traversal:     50 25 20 30 70 60 80
+Expected Pre-order DFS Traversal:       50 25 20 30 70 60 80
+
+== Test Case #5: non-existed element
+Array Size: 8, Input Array:             50 40 60 30 70 20 80 45
+[Size: 8], Pre-order DFS Traversal:     50 30 20 40 45 70 60 80
+Removing... 0
+Warning: Attempt to remove non-existed node from the AVL tree
+[Size: 8], Pre-order DFS Traversal:     50 30 20 40 45 70 60 80
+Expected Pre-order DFS Traversal:       50 30 20 40 45 70 60 80
+
+------------    More cases      ------------
+
+== Test Case #1:
+== Inserting 3 elements into from the input array into the AVL tree...
+Array Size: 3, Input Array:             1 2 3
+== AVL Tree Before removing...
+[Size: 3], Pre-order DFS Traversal:     2 1 3
+Expected Pre-order DFS Traversal:       2 1 3
+
+Removing... 1
+[Size: 2], Pre-order DFS Traversal:     2 3
+Expected Pre-order DFS Traversal:       2 3
+
+Removing... 2
+[Size: 1], Pre-order DFS Traversal:     3
+Expected Pre-order DFS Traversal:       3
+
+Removing... 3
+[Size: 0], Pre-order DFS Traversal:     (Empty)
+Expected Pre-order DFS Traversal:       (Empty)
+
+== Test Case #2:
+== Inserting 3 elements into from the input array into the AVL tree...
+Array Size: 3, Input Array:             3 2 1
+== AVL Tree Before removing...
+[Size: 3], Pre-order DFS Traversal:     2 1 3
+Expected Pre-order DFS Traversal:       2 1 3
+
+Removing... 3
+[Size: 2], Pre-order DFS Traversal:     2 1
+Expected Pre-order DFS Traversal:       2 1
+
+Removing... 2
+[Size: 1], Pre-order DFS Traversal:     1
+Expected Pre-order DFS Traversal:       1
+
+Removing... 1
+[Size: 0], Pre-order DFS Traversal:     (Empty)
+Expected Pre-order DFS Traversal:       (Empty)
+
+== Test Case #3:
+== Inserting 3 elements into from the input array into the AVL tree...
+Array Size: 3, Input Array:             2 3 1
+== AVL Tree Before removing...
+[Size: 3], Pre-order DFS Traversal:     2 1 3
+Expected Pre-order DFS Traversal:       2 1 3
+
+Removing... 2
+[Size: 2], Pre-order DFS Traversal:     3 1
+Expected Pre-order DFS Traversal:       3 1
+
+Removing... 3
+[Size: 1], Pre-order DFS Traversal:     1
+Expected Pre-order DFS Traversal:       1
+
+Removing... 1
+[Size: 0], Pre-order DFS Traversal:     (Empty)
+Expected Pre-order DFS Traversal:       (Empty)
+
+== Test Case #4:
+== Inserting 8 elements into from the input array into the AVL tree...
+Array Size: 8, Input Array:             50 30 20 40 45 70 60 80
+== AVL Tree Before removing...
+[Size: 8], Pre-order DFS Traversal:     45 30 20 40 60 50 70 80
+Expected Pre-order DFS Traversal:       45 30 20 40 60 50 70 80
+
+Removing... 50
+[Size: 7], Pre-order DFS Traversal:     45 30 20 40 70 60 80
+Expected Pre-order DFS Traversal:       45 30 20 40 70 60 80
+
+Removing... 30
+[Size: 6], Pre-order DFS Traversal:     45 40 20 70 60 80
+Expected Pre-order DFS Traversal:       45 40 20 70 60 80
+
+Removing... 20
+[Size: 5], Pre-order DFS Traversal:     45 40 70 60 80
+Expected Pre-order DFS Traversal:       45 40 70 60 80
+
+Removing... 40
+[Size: 4], Pre-order DFS Traversal:     70 45 60 80
+Expected Pre-order DFS Traversal:       70 45 60 80
+
+Removing... 45
+[Size: 3], Pre-order DFS Traversal:     70 60 80
+Expected Pre-order DFS Traversal:       70 60 80
+
+Removing... 70
+[Size: 2], Pre-order DFS Traversal:     80 60
+Expected Pre-order DFS Traversal:       80 60
+
+Removing... 60
+[Size: 1], Pre-order DFS Traversal:     80
+Expected Pre-order DFS Traversal:       80
+
+Removing... 80
+[Size: 0], Pre-order DFS Traversal:     (Empty)
+Expected Pre-order DFS Traversal:       (Empty)
+
+== Test Case #5:
+== Inserting 13 elements into from the input array into the AVL tree...
+Array Size: 13, Input Array:            -9 -7 -5 -3 -1 1 3 5 7 9 11 13 15
+== AVL Tree Before removing...
+[Size: 13], Pre-order DFS Traversal:    5 -3 -7 -9 -5 1 -1 3 9 7 13 11 15
+Expected Pre-order DFS Traversal:       5 -3 -7 -9 -5 1 -1 3 9 7 13 11 15
+
+Removing... -9
+[Size: 12], Pre-order DFS Traversal:    5 -3 -7 -5 1 -1 3 9 7 13 11 15
+Expected Pre-order DFS Traversal:       5 -3 -7 -5 1 -1 3 9 7 13 11 15
+
+Removing... -7
+[Size: 11], Pre-order DFS Traversal:    5 -3 -5 1 -1 3 9 7 13 11 15
+Expected Pre-order DFS Traversal:       5 -3 -5 1 -1 3 9 7 13 11 15
+
+Removing... -5
+[Size: 10], Pre-order DFS Traversal:    5 1 -3 -1 3 9 7 13 11 15
+Expected Pre-order DFS Traversal:       5 1 -3 -1 3 9 7 13 11 15
+
+Removing... -3
+[Size: 9], Pre-order DFS Traversal:     5 1 -1 3 9 7 13 11 15
+Expected Pre-order DFS Traversal:       5 1 -1 3 9 7 13 11 15
+
+Removing... -1
+[Size: 8], Pre-order DFS Traversal:     5 1 3 9 7 13 11 15
+Expected Pre-order DFS Traversal:       5 1 3 9 7 13 11 15
+
+Removing... 1
+[Size: 7], Pre-order DFS Traversal:     9 5 3 7 13 11 15
+Expected Pre-order DFS Traversal:       9 5 3 7 13 11 15
+
+Removing... 3
+[Size: 6], Pre-order DFS Traversal:     9 5 7 13 11 15
+Expected Pre-order DFS Traversal:       9 5 7 13 11 15
+
+Removing... 5
+[Size: 5], Pre-order DFS Traversal:     9 7 13 11 15
+Expected Pre-order DFS Traversal:       9 7 13 11 15
+
+Removing... 7
+[Size: 4], Pre-order DFS Traversal:     13 9 11 15
+Expected Pre-order DFS Traversal:       13 9 11 15
+
+Removing... 9
+[Size: 3], Pre-order DFS Traversal:     13 11 15
+Expected Pre-order DFS Traversal:       13 11 15
+
+Removing... 11
+[Size: 2], Pre-order DFS Traversal:     13 15
+Expected Pre-order DFS Traversal:       13 15
+
+Removing... 13
+[Size: 1], Pre-order DFS Traversal:     15
+Expected Pre-order DFS Traversal:       15
+
+Removing... 15
+[Size: 0], Pre-order DFS Traversal:     (Empty)
+Expected Pre-order DFS Traversal:       (Empty)
+
+== Test Case #6:
+Array Size: 12, Input Array:            0 3 6 9 12 15 18 21 24 27 30 33
+== AVL Tree Before removing...
+[Size: 12], Pre-order DFS Traversal:    21 9 3 0 6 15 12 18 27 24 30 33
+Expected Pre-order DFS Traversal:       21 9 3 0 6 15 12 18 27 24 30 33
+
+Removing... 21
+[Size: 11], Pre-order DFS Traversal:    24 9 3 0 6 15 12 18 30 27 33
+Expected Pre-order DFS Traversal:       24 9 3 0 6 15 12 18 27 30 33
+
+Removing... 24
+[Size: 10], Pre-order DFS Traversal:    27 9 3 0 6 15 12 18 30 33
+Expected Pre-order DFS Traversal:       27 9 3 0 6 15 12 18 30 33
+
+Removing... 1
+Warning: Attempt to remove non-existed node from the AVL tree
+[Size: 10], Pre-order DFS Traversal:    27 9 3 0 6 15 12 18 30 33
+Expected Pre-order DFS Traversal:       27 9 3 0 6 15 12 18 30 33
+
+Removing... 27
+[Size: 9], Pre-order DFS Traversal:     9 3 0 6 30 15 12 18 33
+Expected Pre-order DFS Traversal:       9 3 0 6 30 15 12 18 33
+
+Removing... 9
+[Size: 8], Pre-order DFS Traversal:     12 3 0 6 30 15 18 33
+Expected Pre-order DFS Traversal:       12 3 0 6 30 15 18 33
+
+Removing... 12
+[Size: 7], Pre-order DFS Traversal:     15 3 0 6 30 18 33
+Expected Pre-order DFS Traversal:       15 3 0 6 30 18 33
+
+Removing... 15
+[Size: 6], Pre-order DFS Traversal:     18 3 0 6 30 33
+Expected Pre-order DFS Traversal:       18 3 0 6 30 33
+
+Removing... 18
+[Size: 5], Pre-order DFS Traversal:     30 3 0 6 33
+Expected Pre-order DFS Traversal:       30 3 0 6 33
+
+Removing... 30
+[Size: 4], Pre-order DFS Traversal:     3 0 33 6
+Expected Pre-order DFS Traversal:       3 0 33 6
+
+Removing... 3
+[Size: 3], Pre-order DFS Traversal:     6 0 33
+Expected Pre-order DFS Traversal:       6 0 33
+
+Removing... 6
+[Size: 2], Pre-order DFS Traversal:     33 0
+Expected Pre-order DFS Traversal:       33 0
+
+== Test Case #7:
+Array Size: 14, Input Array:            72 0 59 33 76 -23 -24 -38 7 -61 -88 5 1 -7
+== AVL Tree Before removing...
+[Size: 14], Pre-order DFS Traversal:    0 -24 -61 -88 -38 -23 -7 59 7 5 1 33 72 76
+Expected Pre-order DFS Traversal:       0 -24 -61 -88 -38 -23 -7 59 7 5 1 33 72 76
+
+Removing... -7
+[Size: 13], Pre-order DFS Traversal:    0 -24 -61 -88 -38 -23 59 7 5 1 33 72 76
+Expected Pre-order DFS Traversal:       0 -24 -61 -88 -38 -23 59 7 5 1 33 72 76
+
+Removing... -61
+[Size: 12], Pre-order DFS Traversal:    0 -24 -38 -88 -23 59 7 5 1 33 72 76
+Expected Pre-order DFS Traversal:       0 -24 -38 -88 -23 59 7 5 1 33 72 76
+
+Removing... -38
+[Size: 11], Pre-order DFS Traversal:    7 0 -24 -88 -23 5 1 59 33 72 76
+Expected Pre-order DFS Traversal:       7 0 -24 -88 -23 5 1 59 33 72 76
+
+Removing... -24
+[Size: 10], Pre-order DFS Traversal:    7 0 -23 -88 5 1 59 33 72 76
+Expected Pre-order DFS Traversal:       7 0 -23 -88 5 1 59 33 72 76
+
+Removing... 0
+[Size: 9], Pre-order DFS Traversal:     7 1 -23 -88 5 59 33 72 76
+Expected Pre-order DFS Traversal:       7 1 -23 -88 5 59 33 72 76
+
+Removing... 1
+[Size: 8], Pre-order DFS Traversal:     7 -23 -88 5 59 33 72 76
+Expected Pre-order DFS Traversal:       7 -23 -88 5 59 33 72 76
+
+Removing... 5
+[Size: 7], Pre-order DFS Traversal:     7 -23 -88 59 33 72 76
+Expected Pre-order DFS Traversal:       7 -23 -88 59 33 72 76
+
+Removing... 7
+[Size: 6], Pre-order DFS Traversal:     33 -23 -88 72 59 76
+Expected Pre-order DFS Traversal:       33 -23 -88 72 59 76
+
+Removing... 33
+[Size: 5], Pre-order DFS Traversal:     59 -23 -88 72 76
+Expected Pre-order DFS Traversal:       59 -23 -88 72 76
+
+Removing... 59
+[Size: 4], Pre-order DFS Traversal:     72 -23 -88 76
+Expected Pre-order DFS Traversal:       72 -23 -88 76
+
+Removing... 72
+[Size: 3], Pre-order DFS Traversal:     -23 -88 76
+Expected Pre-order DFS Traversal:       -23 -88 76
+
+Removing... -23
+[Size: 2], Pre-order DFS Traversal:     76 -88
+Expected Pre-order DFS Traversal:       76 -88
+
+Removing... 76
+[Size: 1], Pre-order DFS Traversal:     -88
+Expected Pre-order DFS Traversal:       -88
+
+Removing... -88
+[Size: 0], Pre-order DFS Traversal:     (Empty)
+Expected Pre-order DFS Traversal:       (Empty)

@@ -176,7 +176,7 @@ void bst_remove(struct bst* bst, int key) {
             } else if ( !curr_node->left || !curr_node->right ) {
                 // if the target node has only one child, update the parent node to point
                 // to the child instead of target node
-                replaced_node = !curr_node->left ? curr_node->left : curr_node->right;
+                replaced_node = curr_node->left ? curr_node->left : curr_node->right;
             } else {
                 // if the target node has two children, find its in-order successor with the sucessor's parent
                 struct bst_node* s_parent = curr_node;
@@ -207,10 +207,9 @@ void bst_remove(struct bst* bst, int key) {
         }
     }
     else {
-      printf("Error: Invalid BST for removing the element!\n");
-      exit(1);
+        printf("Error: Invalid BST for removing the element!\n");
+        exit(1);
     }
-
 }
 
 /*
